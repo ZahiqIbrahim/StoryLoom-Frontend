@@ -87,12 +87,12 @@ function Index() {
           <h2 className="font-brush text-3xl">Let AI recommend for your mood</h2>
           <Link to="/recommend" className="font-hand text-sm underline underline-offset-4">View all</Link>
         </div>
-        <div className="flex gap-5 overflow-x-auto pb-4 -mx-5 px-5 snap-x">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           {moods.map((m, i) => (
             <Link
               to="/recommend"
               key={m.label}
-              className="sketch-border lift-hover min-w-[230px] snap-start p-4 flex flex-col gap-3 fade-up"
+              className="sketch-border lift-hover p-4 flex flex-col gap-3 fade-up"
               style={{ animationDelay: `${i * 70}ms` }}
             >
               <SketchPlaceholder label={m.art} className="aspect-[4/3]" />
