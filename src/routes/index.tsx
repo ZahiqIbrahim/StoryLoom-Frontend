@@ -25,7 +25,6 @@ const moods = [
   { label: "In the mood for Fantasy", art: "Castle Sketch" },
   { label: "Something Heartwarming", art: "Teacup Sketch" },
   { label: "Need a dose of Mystery", art: "Magnifier Sketch" },
-  { label: "Lost in Thoughts", art: "Abstract Sketch" },
 ];
 
 function Index() {
