@@ -6,7 +6,7 @@ import { items } from "@/lib/data";
 export const Route = createFileRoute("/explore")({
   head: () => ({
     meta: [
-      { title: "Explore — Jia Mi" },
+      { title: "Explore — Story Loom" },
       { name: "description", content: "Browse handpicked books, movies, series and anime." },
     ],
   }),

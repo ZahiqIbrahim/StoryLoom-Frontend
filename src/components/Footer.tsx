@@ -17,7 +17,7 @@ export function Footer() {
           </div>
           <div className="flex flex-col items-center gap-2">
             <Asterisk size={28} />
-            <span className="font-script text-3xl">jia mi</span>
+            <span className="font-script text-3xl">Story Loom</span>
           </div>
           <p className="font-serif italic text-sm text-right md:text-right">
             A taste of home in every story.

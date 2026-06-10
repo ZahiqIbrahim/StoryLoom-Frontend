@@ -8,7 +8,7 @@ export const Route = createFileRoute("/item/$id")({
     const item = getItem(params.id);
     return {
       meta: [
-        { title: `${item.title} — Jia Mi` },
+        { title: `${item.title} — Story Loom` },
         { name: "description", content: item.description },
         { property: "og:title", content: item.title },
         { property: "og:description", content: item.description },

@@ -7,7 +7,7 @@ import { communities } from "@/lib/data";
 export const Route = createFileRoute("/communities/")({
   head: () => ({
     meta: [
-      { title: "Communities — Jia Mi" },
+      { title: "Communities — Story Loom" },
       { name: "description", content: "Find your people. Join communities of readers, watchers and dreamers." },
     ],
   }),

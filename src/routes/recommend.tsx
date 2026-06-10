@@ -7,7 +7,7 @@ import { getRecommendations } from "@/lib/recommend.functions";
 export const Route = createFileRoute("/recommend")({
   head: () => ({
     meta: [
-      { title: "AI Recommendations — Jia Mi" },
+      { title: "AI Recommendations — Story Loom" },
       { name: "description", content: "Tell us what you love. We'll handpick something new." },
     ],
   }),

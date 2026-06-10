@@ -6,8 +6,8 @@ import { getEmailForUsername } from "@/lib/auth.functions";
 export const Route = createFileRoute("/auth/login")({
   head: () => ({
     meta: [
-      { title: "Log in — Jia Mi" },
-      { name: "description", content: "Log in to your Jia Mi account." },
+      { title: "Log in — Story Loom" },
+      { name: "description", content: "Log in to your Story Loom account." },
     ],
   }),
   component: LoginPage,

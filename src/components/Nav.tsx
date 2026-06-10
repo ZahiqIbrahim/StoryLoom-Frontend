@@ -14,7 +14,7 @@ export function Nav() {
       <div className="max-w-6xl mx-auto px-5 py-4 flex items-center gap-6">
         <Link to="/" className="flex items-center gap-2">
           <Asterisk size={22} />
-          <span className="font-script text-3xl leading-none text-ink">jia mi</span>
+          <span className="font-script text-3xl leading-none text-ink">Story Loom</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 mx-auto">
           {links.map((l) => (
