@@ -9,7 +9,7 @@ export const getRecommendations = createServerFn({ method: "POST" })
     if (!apiKey) throw new Error("AI is not configured.");
 
     const sys =
-      "You are a thoughtful literary/film curator for Jia Mi. Recommend 5 great works the user has likely NOT yet experienced, based on their history and mood. Return ONLY a JSON object: { recommendations: [{ title, creator, genre, reason }] }. The 'creator' field is the author for books or director for movies. 'reason' is one warm sentence beginning with 'Because you liked ...'.";
+      "You are a thoughtful literary/film curator for Story Loom. Recommend 5 great works the user has likely NOT yet experienced, based on their history and mood. Return ONLY a JSON object: { recommendations: [{ title, creator, genre, reason }] }. The 'creator' field is the author for books or director for movies. 'reason' is one warm sentence beginning with 'Because you liked ...'.";
 
     const kindLabel = data.kind === "books" ? "books" : "movies";
     const userMsg = `Recommend ${kindLabel}.

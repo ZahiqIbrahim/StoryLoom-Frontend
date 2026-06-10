@@ -5,7 +5,7 @@ import { Asterisk, SketchDivider, SketchPlaceholder } from "@/components/sketch"
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Jia Mi — Your story awaits" },
+      { title: "Story Loom — Your story awaits" },
       { name: "description", content: "Discover books, movies, series, anime — handpicked for you by AI." },
     ],
   }),

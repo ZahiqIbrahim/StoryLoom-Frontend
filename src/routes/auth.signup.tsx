@@ -5,8 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/auth/signup")({
   head: () => ({
     meta: [
-      { title: "Sign up — Jia Mi" },
-      { name: "description", content: "Create your Jia Mi account." },
+      { title: "Sign up — Story Loom" },
+      { name: "description", content: "Create your Story Loom account." },
     ],
   }),
   component: SignupPage,

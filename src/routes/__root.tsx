@@ -54,9 +54,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Jia Mi — Your story awaits" },
+      { title: "Story Loom — Your story awaits" },
       { name: "description", content: "Handcrafted, AI-powered book and movie discovery." },
-      { property: "og:title", content: "Jia Mi" },
+      { property: "og:title", content: "Story Loom" },
       { property: "og:description", content: "Discover books, movies, series and anime — recommended by AI." },
       { property: "og:type", content: "website" },
     ],

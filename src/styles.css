@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Jia Mi — handcrafted ink-on-parchment design system */
+/* Story Loom — handcrafted ink-on-parchment design system */
 
 @theme inline {
   --color-background: var(--background);

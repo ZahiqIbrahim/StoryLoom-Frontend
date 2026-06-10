@@ -9,8 +9,8 @@ export const Route = createFileRoute("/communities/$id")({
     const c = communities.find((x) => x.id === params.id);
     return {
       meta: [
-        { title: `${c?.name ?? "Community"} — Jia Mi` },
-        { name: "description", content: c?.description ?? "A community on Jia Mi." },
+        { title: `${c?.name ?? "Community"} — Story Loom` },
+        { name: "description", content: c?.description ?? "A community on Story Loom." },
       ],
     };
   },

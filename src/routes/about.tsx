@@ -4,7 +4,7 @@ import { Asterisk, SketchDivider, SketchPlaceholder } from "@/components/sketch"
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Jia Mi" },
+      { title: "About — Story Loom" },
       { name: "description", content: "A handcrafted, AI-powered place to find your next story." },
     ],
   }),
@@ -14,9 +14,9 @@ export const Route = createFileRoute("/about")({
 function About() {
   return (
     <div className="max-w-3xl mx-auto px-5 pt-12">
-      <div className="flex items-center gap-3 mb-4"><Asterisk size={26} /><h1 className="font-brush text-5xl">About Jia Mi</h1></div>
+      <div className="flex items-center gap-3 mb-4"><Asterisk size={26} /><h1 className="font-brush text-5xl">About Story Loom</h1></div>
       <p className="font-serif text-lg leading-relaxed mb-6">
-        Jia Mi (家秘) means <em>a family secret</em> — the small, quiet recommendations passed
+        Story Loom means <em>a family secret</em> — the small, quiet recommendations passed
         between people who know you well. We built this as a place to find your next story
         the same way: handpicked, with care, and a little ink on the page.
       </p>
