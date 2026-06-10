@@ -30,7 +30,28 @@ function Communities() {
       <h1 className="font-brush text-5xl mb-2">Find your people ✦</h1>
       <p className="font-serif italic mb-6">Conversations worth lingering over.</p>
 
-      <div className="sketch-border flex items-center gap-2 px-4 py-2 max-w-lg bg-parchment mb-5">
+      <section className="mb-10">
+        <h2 className="font-brush text-2xl mb-4">Joined Communities</h2>
+        <div className="flex gap-4 overflow-x-auto pb-2">
+          {communities.slice(0, 4).map((c, i) => (
+            <Link
+              key={c.id}
+              to="/communities/$id"
+              params={{ id: c.id }}
+              className="sketch-border p-4 min-w-[220px] flex flex-col gap-2 lift-hover fade-up"
+              style={{ animationDelay: `${i * 60}ms` }}
+            >
+              <SketchPlaceholder label="Community Art" className="aspect-[16/9]" />
+              <h3 className="font-brush text-lg leading-tight">{c.name}</h3>
+              <p className="font-hand text-xs text-ink/80">{c.members} members · {c.posts} posts</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <SketchDivider />
+
+      <div className="sketch-border flex items-center gap-2 px-4 py-2 max-w-lg bg-parchment mb-5 mt-8">
         <Search size={18} strokeWidth={1.5} />
         <input
           value={q}
@@ -45,8 +66,6 @@ function Communities() {
           <button key={c} onClick={() => setCat(c)} className={cat === c ? "ink-btn-filled" : "ink-btn"}>{c}</button>
         ))}
       </div>
-
-      <SketchDivider />
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-8">
         {list.map((c, i) => (
