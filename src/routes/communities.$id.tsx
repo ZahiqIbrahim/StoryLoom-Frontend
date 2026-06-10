@@ -35,6 +35,9 @@ function CommunityPage() {
   const [tab, setTab] = useState<"Discussion" | "Members" | "About">("Discussion");
   const [messages, setMessages] = useState<Message[]>(seed);
   const [draft, setDraft] = useState("");
+  const [joined, setJoined] = useState(true);
+  // Mock admin flag — the first community is treated as "yours"
+  const isAdmin = community.id === communities[0].id;
 
   const send = () => {
     if (!draft.trim()) return;
@@ -51,7 +54,25 @@ function CommunityPage() {
           <h1 className="font-brush text-4xl leading-tight">{community.name}</h1>
           <p className="font-hand text-sm text-ink/80">{community.members} members</p>
         </div>
-        <button className="ink-btn-filled w-fit">Joined</button>
+        <div className="flex flex-wrap gap-2">
+          {joined ? (
+            <button onClick={() => setJoined(false)} className="ink-btn">Leave</button>
+          ) : (
+            <button onClick={() => setJoined(true)} className="ink-btn-filled">Join</button>
+          )}
+          {isAdmin && (
+            <button
+              onClick={() => {
+                if (confirm(`Delete "${community.name}"? This cannot be undone.`)) {
+                  // UI-only stub
+                }
+              }}
+              className="ink-btn border-red-700 text-red-700"
+            >
+              Delete community
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="flex gap-6 font-hand text-base mt-6 border-b border-ink/40 pb-2">
