@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search, BookOpen, Clapperboard, Tv, Smile, Headphones } from "lucide-react";
+import { Search, BookOpen, Clapperboard } from "lucide-react";
 import { Asterisk, SketchDivider, SketchPlaceholder } from "@/components/sketch";
 
 export const Route = createFileRoute("/")({
@@ -15,9 +15,6 @@ export const Route = createFileRoute("/")({
 const categories = [
   { label: "Books", Icon: BookOpen },
   { label: "Movies", Icon: Clapperboard },
-  { label: "Series", Icon: Tv },
-  { label: "Anime", Icon: Smile },
-  { label: "Audiobooks", Icon: Headphones },
 ] as const;
 
 const moods = [
@@ -60,10 +57,7 @@ function Index() {
 
       {/* Categories */}
       <section className="py-10">
-        <div className="flex items-baseline justify-between mb-6">
-          <h2 className="font-brush text-3xl">Explore by</h2>
-          <Link to="/explore" className="sketch-hover font-hand text-sm underline underline-offset-4 px-2 py-1">View all</Link>
-        </div>
+        <h2 className="font-brush text-3xl mb-6">Explore by</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           {categories.map(({ label, Icon }, i) => (
             <Link
