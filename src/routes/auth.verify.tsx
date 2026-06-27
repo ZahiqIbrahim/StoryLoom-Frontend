@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
-import { supabase } from "@/integrations/supabase/client";
+import { resendOtp, verifyOtp } from "@/lib/auth-api";
 
 const search = z.object({ email: z.string().email().optional() });
 
@@ -20,7 +20,7 @@ function VerifyPage() {
   const { email: emailFromSearch } = Route.useSearch();
   const navigate = useNavigate();
   const [email, setEmail] = useState(emailFromSearch ?? "");
-  const [token, setToken] = useState("");
+  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
@@ -31,13 +31,8 @@ function VerifyPage() {
     setInfo(null);
     setLoading(true);
     try {
-      const { error: verifyError } = await supabase.auth.verifyOtp({
-        email: email.trim(),
-        token: token.trim(),
-        type: "email",
-      });
-      if (verifyError) throw verifyError;
-      navigate({ to: "/" });
+      await verifyOtp({ email: email.trim(), otp: otp.trim() });
+      navigate({ to: "/auth/login" });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid code.");
     } finally {
@@ -49,11 +44,7 @@ function VerifyPage() {
     setError(null);
     setInfo(null);
     try {
-      const { error: resendError } = await supabase.auth.resend({
-        type: "signup",
-        email: email.trim(),
-      });
-      if (resendError) throw resendError;
+      await resendOtp({ email: email.trim() });
       setInfo("Code resent. Check your inbox.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not resend code.");
@@ -83,8 +74,8 @@ function VerifyPage() {
             <input
               type="text"
               inputMode="numeric"
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
               required
               className="w-full px-3 py-2 bg-transparent border border-ink/60 rounded-md font-serif tracking-widest focus:outline-none focus:ring-1 focus:ring-ink"
             />
