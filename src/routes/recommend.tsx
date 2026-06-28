@@ -1,8 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { Asterisk, CoverImage, SketchDivider } from "@/components/sketch";
-import { getRecommendations } from "@/lib/recommend.functions";
+import {
+  recommendBooks,
+  recommendMovies,
+  type RecommendedBook,
+  type RecommendedMovie,
+} from "@/lib/recommend-api";
 
 export const Route = createFileRoute("/recommend")({
   head: () => ({
@@ -16,19 +20,43 @@ export const Route = createFileRoute("/recommend")({
 
 const MOODS = ["Adventure", "Romance", "Mystery", "Fantasy", "Thriller", "Heartwarming", "Thought-provoking"];
 
-type Rec = { title: string; creator: string; genre: string; reason: string };
+type UnifiedRec = {
+  key: string;
+  title: string;
+  creator: string;
+  meta: string;
+  description: string;
+  cover?: string;
+};
 
-function bookCover(title: string) {
-  return `https://covers.openlibrary.org/b/title/${encodeURIComponent(title)}-L.jpg`;
+function mapBook(b: RecommendedBook): UnifiedRec {
+  return {
+    key: String(b.key ?? b.id ?? b.title),
+    title: b.title,
+    creator: b.authorName?.join(", ") || "Unknown author",
+    meta: b.firstPublishYear ? `Published ${b.firstPublishYear}` : "",
+    description: b.subtitle || "",
+    cover: b.cover,
+  };
+}
+
+function mapMovie(m: RecommendedMovie): UnifiedRec {
+  return {
+    key: String(m.id ?? m.title),
+    title: m.title,
+    creator: m.releaseDate ? m.releaseDate.slice(0, 4) : "",
+    meta: typeof m.voteAverage === "number" ? `★ ${m.voteAverage.toFixed(1)} / 10` : "",
+    description: m.overview || "",
+    cover: m.posterPath,
+  };
 }
 
 function Recommend() {
-  const recommend = useServerFn(getRecommendations);
   const [kind, setKind] = useState<"books" | "movies">("books");
   const [history, setHistory] = useState("");
   const [moods, setMoods] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState<Rec[] | null>(null);
+  const [results, setResults] = useState<UnifiedRec[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const toggleMood = (m: string) =>
@@ -39,12 +67,22 @@ function Recommend() {
     setError(null);
     setResults(null);
     try {
-      const res = await recommend({ data: { kind, history, moods } });
-      if (res.error) setError(res.error);
-      setResults(res.recommendations);
+      const moodPart = moods.length ? ` I'm in the mood for something ${moods.join(", ").toLowerCase()}.` : "";
+      const historyPart = history.trim()
+        ? `I loved ${history.trim()}.`
+        : `Surprise me with great ${kind}.`;
+      const prompt = `${historyPart}${moodPart} Recommend ${kind} similar in spirit.`;
+
+      if (kind === "books") {
+        const data = await recommendBooks(prompt);
+        setResults(data.map(mapBook));
+      } else {
+        const data = await recommendMovies(prompt);
+        setResults(data.map(mapMovie));
+      }
     } catch (e) {
       console.error(e);
-      setError("Something went wrong. Try again.");
+      setError(e instanceof Error ? e.message : "Something went wrong. Try again.");
     } finally {
       setLoading(false);
     }
@@ -104,17 +142,20 @@ function Recommend() {
           <h2 className="font-brush text-3xl mb-6">Handpicked for you ✦</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {results.map((r, i) => (
-              <div key={i} className="sketch-border p-4 space-y-3 lift-hover fade-up" style={{ animationDelay: `${i * 60}ms` }}>
-                {kind === "books" ? (
-                  <CoverImage src={bookCover(r.title)} alt={r.title} />
+              <div key={r.key + i} className="sketch-border p-4 space-y-3 lift-hover fade-up" style={{ animationDelay: `${i * 60}ms` }}>
+                {r.cover ? (
+                  <CoverImage src={r.cover} alt={r.title} />
                 ) : (
                   <div className="sketch-border-tight aspect-[2/3] flex items-center justify-center font-serif italic text-center p-4">
                     ✦ {r.title}
                   </div>
                 )}
                 <h3 className="font-brush text-xl leading-tight">{r.title}</h3>
-                <p className="font-hand text-sm text-ink/80">{r.creator} · {r.genre}</p>
-                <p className="font-serif italic text-sm">{r.reason}</p>
+                <p className="font-hand text-sm text-ink/80">
+                  {r.creator}
+                  {r.meta ? ` · ${r.meta}` : ""}
+                </p>
+                {r.description && <p className="font-serif italic text-sm line-clamp-4">{r.description}</p>}
               </div>
             ))}
           </div>
