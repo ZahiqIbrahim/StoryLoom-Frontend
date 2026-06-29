@@ -15,8 +15,12 @@ export const Route = createFileRoute("/recommend")({
       { name: "description", content: "Tell us what you love. We'll handpick something new." },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>) => ({
+    mood: typeof search.mood === "string" ? search.mood : undefined,
+  }),
   component: Recommend,
 });
+
 
 const MOODS = ["Adventure", "Romance", "Mystery", "Fantasy", "Thriller", "Heartwarming", "Thought-provoking"];
 
