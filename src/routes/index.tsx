@@ -18,11 +18,12 @@ const categories = [
 ] as const;
 
 const moods = [
-  { label: "Feeling Adventurous", art: "Mountain Sketch" },
-  { label: "In the mood for Fantasy", art: "Castle Sketch" },
-  { label: "Something Heartwarming", art: "Teacup Sketch" },
-  { label: "Need a dose of Mystery", art: "Magnifier Sketch" },
+  { label: "Feeling Adventurous", art: "Mountain Sketch", tag: "Adventure" },
+  { label: "In the mood for Fantasy", art: "Castle Sketch", tag: "Fantasy" },
+  { label: "Something Heartwarming", art: "Teacup Sketch", tag: "Heartwarming" },
+  { label: "Need a dose of Mystery", art: "Magnifier Sketch", tag: "Mystery" },
 ];
+
 
 function Index() {
   return (
@@ -77,6 +78,7 @@ function Index() {
           {moods.map((m, i) => (
             <Link
               to="/recommend"
+              search={{ mood: m.tag }}
               key={m.label}
               className="sketch-border lift-hover p-4 flex flex-col gap-3 fade-up"
               style={{ animationDelay: `${i * 70}ms` }}
@@ -85,6 +87,7 @@ function Index() {
               <p className="font-script text-2xl text-center leading-tight">{m.label}</p>
             </Link>
           ))}
+
         </div>
       </section>
 

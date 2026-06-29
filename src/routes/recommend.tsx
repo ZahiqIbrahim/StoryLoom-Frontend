@@ -15,8 +15,12 @@ export const Route = createFileRoute("/recommend")({
       { name: "description", content: "Tell us what you love. We'll handpick something new." },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>) => ({
+    mood: typeof search.mood === "string" ? search.mood : undefined,
+  }),
   component: Recommend,
 });
+
 
 const MOODS = ["Adventure", "Romance", "Mystery", "Fantasy", "Thriller", "Heartwarming", "Thought-provoking"];
 
@@ -54,10 +58,14 @@ function mapMovie(m: RecommendedMovie): UnifiedRec {
 function Recommend() {
   const [kind, setKind] = useState<"books" | "movies">("books");
   const [history, setHistory] = useState("");
-  const [moods, setMoods] = useState<string[]>([]);
+  const { mood: initialMood } = Route.useSearch();
+  const [moods, setMoods] = useState<string[]>(
+    initialMood && MOODS.includes(initialMood) ? [initialMood] : [],
+  );
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<UnifiedRec[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+
 
   const toggleMood = (m: string) =>
     setMoods((cur) => (cur.includes(m) ? cur.filter((x) => x !== m) : [...cur, m]));
@@ -114,9 +122,6 @@ function Recommend() {
           rows={3}
           className="sketch-border w-full p-4 bg-parchment font-serif outline-none"
         />
-        <button onClick={() => setHistory("")} className="font-hand text-sm underline underline-offset-4 opacity-80">
-          Skip — just surprise me
-        </button>
       </section>
 
       <section className="space-y-3 mb-8">
