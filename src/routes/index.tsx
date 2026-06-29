@@ -78,6 +78,7 @@ function Index() {
           {moods.map((m, i) => (
             <Link
               to="/recommend"
+              search={{ mood: m.tag }}
               key={m.label}
               className="sketch-border lift-hover p-4 flex flex-col gap-3 fade-up"
               style={{ animationDelay: `${i * 70}ms` }}
@@ -86,6 +87,7 @@ function Index() {
               <p className="font-script text-2xl text-center leading-tight">{m.label}</p>
             </Link>
           ))}
+
         </div>
       </section>
 
