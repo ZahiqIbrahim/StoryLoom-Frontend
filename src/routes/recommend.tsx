@@ -58,10 +58,14 @@ function mapMovie(m: RecommendedMovie): UnifiedRec {
 function Recommend() {
   const [kind, setKind] = useState<"books" | "movies">("books");
   const [history, setHistory] = useState("");
-  const [moods, setMoods] = useState<string[]>([]);
+  const { mood: initialMood } = Route.useSearch();
+  const [moods, setMoods] = useState<string[]>(
+    initialMood && MOODS.includes(initialMood) ? [initialMood] : [],
+  );
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<UnifiedRec[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+
 
   const toggleMood = (m: string) =>
     setMoods((cur) => (cur.includes(m) ? cur.filter((x) => x !== m) : [...cur, m]));
