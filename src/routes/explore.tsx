@@ -50,6 +50,7 @@ function movieToCard(m: CatalogMovie): Card {
     meta: m.voteAverage ? `★ ${m.voteAverage}` : undefined,
     cover: m.posterPath,
     type: "Movie",
+    description: m.overview,
   };
 }
 
@@ -121,6 +122,9 @@ function Explore() {
             <CoverImage src={c.cover} alt={c.title} />
             <h3 className="font-brush text-lg leading-tight">{c.title}</h3>
             {c.subtitle && <p className="font-hand text-sm text-ink/80">{c.subtitle}</p>}
+            {c.description && c.type === "Movie" && (
+              <p className="font-hand text-sm text-ink/70 line-clamp-3">{c.description}</p>
+            )}
             <p className="font-serif italic text-xs">
               {c.type}
               {c.meta ? ` · ${c.meta}` : ""}
