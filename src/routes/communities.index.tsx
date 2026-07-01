@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, X, RefreshCw, LogIn } from "lucide-react";
-import { SketchDivider, SketchPlaceholder } from "@/components/sketch";
+import { SketchDivider } from "@/components/sketch";
 import { createRoom, getMyRooms, joinRoom, type Room } from "@/lib/community-api";
 import { isAuthenticated } from "@/lib/auth-api";
 
@@ -87,7 +87,6 @@ function Communities() {
                   className="sketch-border p-5 space-y-3 lift-hover fade-up block"
                   style={{ animationDelay: `${i * 60}ms` }}
                 >
-                  <SketchPlaceholder label="Community Art" className="aspect-[16/9]" />
                   <h3 className="font-brush text-xl leading-tight">{r.roomId}</h3>
                   <p className="font-serif italic text-sm">{r.roomDescription}</p>
                   <p className="font-hand text-xs text-ink/80">
@@ -125,15 +124,8 @@ function Communities() {
 function CreateCommunityModal({ onClose, onCreated }: { onClose: () => void; onCreated: (r: Room) => void }) {
   const [roomId, setRoomId] = useState("");
   const [about, setAbout] = useState("");
-  const [preview, setPreview] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  const onPick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0];
-    if (f) setPreview(URL.createObjectURL(f));
-  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -161,22 +153,6 @@ function CreateCommunityModal({ onClose, onCreated }: { onClose: () => void; onC
           <button type="button" onClick={onClose} className="ink-btn !p-2" aria-label="close">
             <X size={16} strokeWidth={1.5} />
           </button>
-        </div>
-
-        <div>
-          <label className="font-hand text-sm block mb-1">Picture (local preview only)</label>
-          <button
-            type="button"
-            onClick={() => fileRef.current?.click()}
-            className="sketch-border w-full aspect-[16/9] flex items-center justify-center overflow-hidden bg-card/40 lift-hover"
-          >
-            {preview ? (
-              <img src={preview} alt="preview" className="w-full h-full object-cover" />
-            ) : (
-              <span className="font-hand text-ink/70">Upload an image</span>
-            )}
-          </button>
-          <input ref={fileRef} type="file" accept="image/*" onChange={onPick} className="hidden" />
         </div>
 
         <div>

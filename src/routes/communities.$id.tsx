@@ -132,6 +132,7 @@ function CommunityPage() {
   };
 
   const onDelete = async () => {
+    if (!isOwner) return;
     if (!confirm(`Delete "${id}"? This cannot be undone.`)) return;
     try { await deleteRoom(id); navigate({ to: "/communities" }); }
     catch (e) { setError(e instanceof Error ? e.message : "Failed to delete"); }
