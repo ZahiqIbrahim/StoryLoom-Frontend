@@ -18,10 +18,10 @@ const categories = [
 ] as const;
 
 const moods = [
-  { label: "Feeling Adventurous", art: "Mountain Sketch", tag: "Adventure" },
-  { label: "In the mood for Fantasy", art: "Castle Sketch", tag: "Fantasy" },
-  { label: "Something Heartwarming", art: "Teacup Sketch", tag: "Heartwarming" },
-  { label: "Need a dose of Mystery", art: "Magnifier Sketch", tag: "Mystery" },
+  { label: "Feeling Adventurous", art: "Mountain Sketch", tag: "Adventure", img: "/adventurous.jpg" },
+  { label: "In the mood for Fantasy", art: "Castle Sketch", tag: "Fantasy", img: "/fantasy.jpg" },
+  { label: "Something Heartwarming", art: "Teacup Sketch", tag: "Heartwarming", img: "/heartwarming.jpg" },
+  { label: "Need a dose of Mystery", art: "Magnifier Sketch", tag: "Mystery", img: "/mystery.jpg" },
 ];
 
 
@@ -43,7 +43,14 @@ function Index() {
             <Link to="/explore" className="ink-btn">Browse</Link>
           </div>
         </div>
-        <SketchPlaceholder label="Bookshop Illustration" className="aspect-[4/3] fade-up" />
+        <div className="sketch-border-tight overflow-hidden aspect-[4/3] fade-up">
+          <img
+            src="/bookshop.jpg"
+            alt="Bookshop illustration"
+            className="w-full h-full object-cover"
+            loading="eager"
+          />
+        </div>
       </section>
 
       <SketchDivider />
@@ -83,7 +90,18 @@ function Index() {
               className="sketch-border lift-hover p-4 flex flex-col gap-3 fade-up"
               style={{ animationDelay: `${i * 70}ms` }}
             >
-              <SketchPlaceholder label={m.art} className="aspect-[4/3]" />
+              {m.img ? (
+                <div className="sketch-border-tight overflow-hidden aspect-[4/3]">
+                  <img
+                    src={m.img}
+                    alt={m.label}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <SketchPlaceholder label={m.art} className="aspect-[4/3]" />
+              )}
               <p className="font-script text-2xl text-center leading-tight">{m.label}</p>
             </Link>
           ))}
@@ -101,7 +119,14 @@ function Index() {
             <p className="font-serif italic">Find your people in communities built around the stories you love.</p>
             <Link to="/communities" className="ink-btn-filled">Explore Communities</Link>
           </div>
-          <SketchPlaceholder label="Community Scene" className="aspect-[5/4]" />
+          <div className="sketch-border-tight overflow-hidden aspect-[5/4]">
+            <img
+              src="/community.jpg"
+              alt="Community scene"
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
       </section>
     </div>

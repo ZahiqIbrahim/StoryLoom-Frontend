@@ -20,7 +20,14 @@ function About() {
         between people who know you well. We built this as a place to find your next story
         the same way: handpicked, with care, and a little ink on the page.
       </p>
-      <SketchPlaceholder label="Café Table Scene" className="aspect-[5/3] my-6" />
+      <div className="sketch-border-tight overflow-hidden aspect-[5/3] my-6">
+        <img
+          src="/community.jpg"
+          alt="Café table scene"
+          loading="lazy"
+          className="w-full h-full object-cover"
+        />
+      </div>
       <SketchDivider />
       <h2 className="font-brush text-3xl mt-8 mb-3">How it works</h2>
       <ol className="font-serif space-y-2 list-decimal pl-6">
